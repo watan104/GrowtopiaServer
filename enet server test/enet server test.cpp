@@ -1466,6 +1466,22 @@ void buildItemsDatabase()
 				}
 			}
 		}
+		if (itemsdatVersion >= 12) memPos += 13;
+		if (itemsdatVersion >= 13) memPos += 4;
+		if (itemsdatVersion >= 14) memPos += 4;
+		if (itemsdatVersion >= 15) {
+			memPos += 25;
+			int16_t strLen = *(int16_t*)&data[memPos];
+			memPos += 2 + strLen;
+		}
+		if (itemsdatVersion >= 16) {
+			int16_t strLen = *(int16_t*)&data[memPos];
+			memPos += 2 + strLen;
+		}
+		if (itemsdatVersion >= 17) memPos += 4;
+		if (itemsdatVersion >= 18) memPos += 4;
+		if (itemsdatVersion >= 19) memPos += 9;
+		
 		if (i != tile.id)
 			cout << "Item are unordered!" << i << "/" << tile.id << endl;
 
@@ -2449,7 +2465,7 @@ void loadnews() {
 		 memcpy(data + 68 + namelen, &xSize, 1);
 		 memcpy(data + 72 + namelen, &ySize, 1);
 		 memcpy(data + 76 + namelen, &square, 2);
-		 BYTE* blc = data + 80 + namelen;
+		 BYTE* blc = data + 85 + namelen;
 		for (int i = 0; i < square; i++) {
 			//removed cus some of blocks require tile extra and it will crash the world without
 			memcpy(blc, &zero, 2);
